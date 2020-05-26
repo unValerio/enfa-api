@@ -1,0 +1,68 @@
+openapi: 3.0.0
+info:
+  title: Enfa Local Delivery API
+  version: '2.0'
+  description: 'REST API para entregas a domicilio (en bici, moto y a pie)'
+servers:
+  - url: 'https://local.enfadelivery.com/v2'
+paths:
+  /authenticate:
+    post:
+      summary: ''
+      operationId: post-authenticate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  token:
+                    type: string
+      parameters:
+        - schema:
+            type: string
+            default: application/x-www-form-urlencoded
+          in: header
+          name: Content-Type
+          required: true
+      description: ''
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+              required:
+                - email
+                - password
+        description: ''
+  /orders:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-orders
+      description: Lista de órdenes
+      security:
+        - x-access-token: []
+components:
+  schemas: {}
+  securitySchemes:
+    x-access-token:
+      name: x-access-token
+      type: apiKey
+      in: header
+security:
+  - undefined: []
